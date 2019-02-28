@@ -1,6 +1,7 @@
 "use strict";
 const UserRoutes = require("../app/Routes/user.route");
 const GameRoute = require("../app/Routes/game.route");
+const SigninRoute = require("../app/Routes/signin.route");
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -17,5 +18,15 @@ const GameRoute = require("../app/Routes/game.route");
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use("Route");
 
-Route.group("users", UserRoutes).prefix("users");
-Route.group("games", GameRoute).prefix("games");
+Route.group("users", UserRoutes)
+  .prefix("users")
+  .middleware("auth");
+Route.group("games", GameRoute)
+  .prefix("games")
+  .middleware("auth");
+
+Route.group("games", GameRoute)
+  .prefix("games")
+  .middleware("auth");
+
+Route.group("signin", SigninRoute).prefix("signin");

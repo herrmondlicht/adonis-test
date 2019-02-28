@@ -4,17 +4,18 @@ const Game = use("App/Models/Game");
 const favoriteGames = "favoriteGames";
 
 class UserController {
-  async index() {
-    const users = await User.query()
+  async index({ auth }) {
+    const { id } = await auth.getUser();
+    console.log(id);
+    return await User.query()
       .with(favoriteGames)
       .fetch();
-    return users;
   }
 
   async getById({ params }) {
     return await User.query()
       .with("favoriteGames")
-      .where("id", params.userId)
+      .where({ id: params.userId })
       .fetch();
   }
 
